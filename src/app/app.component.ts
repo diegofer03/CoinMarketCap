@@ -5,8 +5,8 @@ import { HomeComponent } from './pages/home/home.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ HomeComponent],
-  template: `<app-home/>`,
+  imports: [ RouterOutlet,HomeComponent],
+  templateUrl: `./app.component.html`,
   styleUrl: './app.component.scss'
 })
 export class AppComponent {

@@ -1,5 +1,5 @@
 <header-component/>
-<mat-grid-list cols="4" rowHeight="100px">
+<!-- <mat-grid-list cols="4" rowHeight="100px">
   <mat-grid-tile [colspan]="3" [rowspan]="1">
     <movements-list-table />
   </mat-grid-tile>
@@ -8,6 +8,19 @@
   </mat-grid-tile>
   <mat-grid-tile [colspan]="3" [rowspan]="1">
     <currency-transaction-form />
+  </mat-grid-tile>
+</mat-grid-list> -->
+<mat-grid-list [cols]="cols" rowHeight="100px">
+  <mat-grid-tile [colspan]="cols > 2 ? 3 : cols" [rowspan]="1">
+    <movements-list-table></movements-list-table>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="cols > 3 ? 1 : cols" [rowspan]="cols < 2 ? 1 : 1" >
+    <investment-status-view />
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="cols > 2 ? 3 : cols" [rowspan]="1">
+    <currency-transaction-form></currency-transaction-form>
   </mat-grid-tile>
 </mat-grid-list>
 <footer-component/>
