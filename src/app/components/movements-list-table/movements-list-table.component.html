@@ -38,8 +38,8 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-    <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    <tr class="" *matNoDataRow>
+      <td class="no-data-row" colspan="6">No Data Matching The Search </td>
     </tr>
   </table>
   <mat-paginator pageSize="5" aria-label="Select page of transaction"></mat-paginator>
