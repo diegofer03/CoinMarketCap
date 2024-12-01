@@ -39,3 +39,23 @@ $CoinMarketCap-theme: mat.define-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Arial, sans-serif; padding: 0;}
+
+//scrollbar style
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 4px
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999
+}
+::-webkit-scrollbar-thumb:hover:active {
+  background: #999
+}

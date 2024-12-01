@@ -1,26 +1,15 @@
 <header-component/>
-<!-- <mat-grid-list cols="4" rowHeight="100px">
-  <mat-grid-tile [colspan]="3" [rowspan]="1">
-    <movements-list-table />
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="2">
-    <investment-status-view />
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="3" [rowspan]="1">
-    <currency-transaction-form />
-  </mat-grid-tile>
-</mat-grid-list> -->
-<mat-grid-list [cols]="cols" rowHeight="100px">
-  <mat-grid-tile [colspan]="cols > 2 ? 3 : cols" [rowspan]="1">
-    <movements-list-table></movements-list-table>
+<mat-grid-list [cols]="cols" rowHeight="100px" class="grid-container">
+  <mat-grid-tile [colspan]="cols > 2 ? 3 : cols" [rowspan]="5">
+    <movements-list-table class="movements-list"/>
   </mat-grid-tile>
 
-  <mat-grid-tile [colspan]="cols > 3 ? 1 : cols" [rowspan]="cols < 2 ? 1 : 1" >
-    <investment-status-view />
+  <mat-grid-tile [colspan]="cols > 3 ? 1 : cols" [rowspan]="4" >
+    <investment-status-view class="status-view"/>
   </mat-grid-tile>
 
-  <mat-grid-tile [colspan]="cols > 2 ? 3 : cols" [rowspan]="1">
-    <currency-transaction-form></currency-transaction-form>
+  <mat-grid-tile [colspan]="cols > 2 ? 3 : cols" [rowspan]="cols < 2 ? 7 : 5">
+    <currency-transaction-form class="transaction-form"/>
   </mat-grid-tile>
 </mat-grid-list>
 <footer-component/>

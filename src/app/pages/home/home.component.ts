@@ -7,6 +7,7 @@ import { CurrencyTransactionFormComponent } from '../../components/currency-tran
 import { FooterComponent } from '../../components/footer/footer.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AppService } from '../../services/app.service';
 
 @Component({
   selector: 'app-home',
@@ -26,18 +27,13 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 export class HomeComponent {
   cols: number = 4;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-    this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large])
-      .subscribe(result => {
-        if (result.breakpoints[Breakpoints.XSmall]) {
-          this.cols = 1;
-        } else if (result.breakpoints[Breakpoints.Small]) {
-          this.cols = 2;
-        } else if (result.breakpoints[Breakpoints.Medium]) {
-          this.cols = 3;
-        } else {
-          this.cols = 4;
-        }
-      });
+  constructor(private appService: AppService) {
+
+  }
+
+  ngOnInit(): void {
+    this.appService.getBreakpointCols().subscribe((cols: number) => {
+      this.cols = cols;
+    });
   }
 }
