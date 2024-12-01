@@ -1,5 +1,5 @@
 .table-title{
-  font-size: medium;
+  font-size: large;
   margin: 0 0 0 10px;
 }
 
@@ -24,4 +24,20 @@
   height: 100%;
   overflow: auto;
   box-sizing: border-box;
+}
+
+.error-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: red;
+  font-size: large;
+}
+
+.loader-container{
+  width: 100%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

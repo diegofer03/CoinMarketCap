@@ -8,7 +8,7 @@
     <investment-status-view class="status-view"/>
   </mat-grid-tile>
 
-  <mat-grid-tile [colspan]="cols > 2 ? 3 : cols" [rowspan]="cols < 2 ? 7 : 5">
+  <mat-grid-tile id="form-section" *ngIf="activeForm()" [colspan]="cols > 2 ? 3 : cols" [rowspan]="cols < 2 ? 7 : 5">
     <currency-transaction-form class="transaction-form"/>
   </mat-grid-tile>
 </mat-grid-list>
