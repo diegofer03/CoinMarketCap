@@ -1,18 +1,14 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-
-export interface Transaction {
-  date: string;
-  time: string;
-  from: string;
-  amountFrom: number;
-  to: string;
-  amountTo: number;
-}
+import {MatSort, MatSortModule, Sort} from '@angular/material/sort';
+import { MockApiService } from '../../services/mock-api/mock-api.service';
+import { FethListTransaction, Transaction } from '../../models/app.model';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'movements-list-table',
@@ -22,27 +18,19 @@ export interface Transaction {
     MatInputModule,
     MatFormFieldModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    CommonModule,
   ],
   templateUrl: './movements-list-table.component.html',
   styleUrl: './movements-list-table.component.scss'
 })
 export class MovementsListTableComponent {
+  private mockApiService = inject(MockApiService);
   displayedColumns: string[] = ['date','time', 'from','amountFrom', 'to', 'amountTo'];
-  dataSource: MatTableDataSource<Transaction>;
-
-  transactions: Transaction[] = [
-    { date: '01/01/2023', time: '12:00:00', from: 'EUR', amountFrom: 7625.15, to: 'BTC', amountTo: 1.0 },
-    { date: '02/01/2023', time: '14:30:00', from: 'BTC', amountFrom: 1.0, to: 'LTC', amountTo: 40.0 },
-    { date: '03/01/2023', time: '15:00:00', from: 'LTC', amountFrom: 40.0, to: 'BTC', amountTo: 1.6 },
-    { date: '03/01/2023', time: '15:00:00', from: 'LTC', amountFrom: 40.0, to: 'BTC', amountTo: 1.6 },
-    { date: '03/01/2023', time: '15:00:00', from: 'LTC', amountFrom: 40.0, to: 'BTC', amountTo: 1.6 },
-    { date: '03/01/2023', time: '15:00:00', from: 'LTC', amountFrom: 40.0, to: 'BTC', amountTo: 1.6 },
-    { date: '03/01/2023', time: '15:00:00', from: 'LTC', amountFrom: 40.0, to: 'BTC', amountTo: 1.6 },
-    { date: '03/01/2023', time: '15:00:00', from: 'LTC', amountFrom: 40.0, to: 'BTC', amountTo: 1.6 },
-    { date: '03/01/2023', time: '15:00:00', from: 'LTC', amountFrom: 40.0, to: 'BTC', amountTo: 1.6 },
-    { date: '03/01/2023', time: '15:00:00', from: 'LTC', amountFrom: 40.0, to: 'BTC', amountTo: 1.6 },
-  ];
+  dataSource: MatTableDataSource<Transaction > ;
+  loading: boolean = false
+  errorFetch: boolean = false
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -51,13 +39,35 @@ export class MovementsListTableComponent {
 
   constructor() {
 
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(this.transactions);
+    this.dataSource = new MatTableDataSource<Transaction >([]);
+  }
+
+  ngOnInit(){
+    this.fetchListTransactions()
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  fetchListTransactions() : void {
+    this.loading = true;
+    this.mockApiService.getListTransaction().subscribe({
+      next: (response : FethListTransaction) => {
+        this.dataSource.data =  response.data;
+        this.dataSource.sort = this.sort;
+        this.loading = false;
+        console.log(response.data)
+        console.log(this.dataSource.data)
+
+      },
+      error: (error) => {
+        console.error('Error al obtener datos:', error);
+        this.loading = false;
+        this.errorFetch = true
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -67,5 +77,9 @@ export class MovementsListTableComponent {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  sortChange(sortState: Sort) {
+    console.log(sortState)
   }
 }

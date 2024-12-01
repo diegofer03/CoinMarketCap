@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { HeaderComponent } from '../../components/header/header.component';
 import { MovementsListTableComponent } from '../../components/movements-list-table/movements-list-table.component';
@@ -7,7 +7,8 @@ import { CurrencyTransactionFormComponent } from '../../components/currency-tran
 import { FooterComponent } from '../../components/footer/footer.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AppService } from '../../services/app.service';
+import { AppService } from '../../services/app/app.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -19,15 +20,18 @@ import { AppService } from '../../services/app.service';
     MovementsListTableComponent,
     InvestmentStatusViewComponent,
     CurrencyTransactionFormComponent,
-    FooterComponent
+    FooterComponent,
+    CommonModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  private appService = inject(AppService);
+  activeForm = this.appService.activeForm
   cols: number = 4;
 
-  constructor(private appService: AppService) {
+  constructor() {
 
   }
 
