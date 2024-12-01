@@ -1,0 +1,42 @@
+<mat-card class="investment-summary">
+  <mat-card-header class="card-header">
+    <mat-card-title class="card-title">Status</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="card-content">
+    <div class="summary-item">
+      <span>Invested:</span>
+      <span class="value">7.625,15 €</span>
+    </div>
+    <div class="summary-item">
+      <span>Worth:</span>
+      <span class="value">9.500,34 €</span>
+    </div>
+    <div class="summary-item">
+      <span>Result:</span>
+      <span class="value positive">+ 1.875,19 €</span>
+    </div>
+    <div class="button-container">
+      <button
+      mat-fab
+      color="accent"
+      aria-label="Example icon button with a home icon"
+      #tooltip="matTooltip"
+      matTooltip="Refresh Transactions"
+      matTooltipPosition="below"
+       >
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <button
+      mat-fab
+      color="accent"
+      aria-label="Example icon button with a home icon"
+      #tooltip="matTooltip"
+      matTooltip="Register New Transaction"
+      matTooltipPosition="below"
+       >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </mat-card-content>
+
+</mat-card>
