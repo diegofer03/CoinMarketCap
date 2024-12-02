@@ -58,9 +58,9 @@ export class InvestmentStatusViewComponent {
   }
 
   calculateResult(data: StatusInvest): void{
-    const aux =  (parseFloat(data.actualWorth.replace(/\./g, '').replace(',', '.')) - parseFloat(data.invested.replace(/\./g, '').replace(',', '.')))
+    const aux =  (parseFloat(data.actualWorth.replace(',', '')) - parseFloat(data.invested.replace(',', '')))
     this.revenue = aux > 0 ? true : false
-    this.dataResult = aux.toFixed(2) + ''
+    this.dataResult = (aux.toFixed(2) + '')
   }
 
   handleActiveForm(): void{

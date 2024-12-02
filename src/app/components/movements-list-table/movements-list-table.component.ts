@@ -58,8 +58,6 @@ export class MovementsListTableComponent {
         this.dataSource.data =  response.data;
         this.dataSource.sort = this.sort;
         this.loading = false;
-        console.log(response.data)
-        console.log(this.dataSource.data)
 
       },
       error: (error) => {

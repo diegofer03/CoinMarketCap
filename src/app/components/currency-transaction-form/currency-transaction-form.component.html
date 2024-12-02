@@ -3,56 +3,88 @@
     <mat-card-title class="card-title">New Transaction</mat-card-title>
   </mat-card-header>
   <mat-card-content class="form-card-content">
-    <form class="transaction-form">
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="transaction-form">
+      <mat-error *ngIf="transactionForm.hasError('sameCurrency')">
+        From and To currencies cannot be the same.
+      </mat-error>
+      <mat-error *ngIf="!checkAvailableCurrency">
+        Amount Not Available For Transaction
+      </mat-error>
+      <mat-error *ngIf="calculateError">
+        An Error Ocurred While Calculate Amount
+      </mat-error>
       <div class="transaction-form-inputs" [class.transaction-form-responsive]="responsiveSize < 2">
-
         <div class="form-row" [class.form-row-responsive]="responsiveSize < 2">
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>From</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let currency of currencies" [value]="currency">
-                {{ currency }}
+            <mat-select  formControlName="fromCurrency" (valueChange)="onInputCurrencyChange()">
+              <mat-option *ngFor="let currency of availableCurrency" [value]="currency.currency">
+                {{ currency.currency }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="transactionForm.get('fromCurrency')?.hasError('required')">
+              This field is required
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Enter Amount</mat-label>
-            <input matInput type="number" />
+            <input formControlName="amount" matInput type="text"
+            (change)="onInputCurrencyChange()" (input)="formatInputAmount($event)" maxlength="11"/>
+            <mat-error *ngIf="transactionForm.get('amount')?.hasError('min')">
+              Minimum value is 1
+            </mat-error>
           </mat-form-field>
 
-          <button type="button" mat-fab extended  color="accent" class=" margin-auto action-button">
-            Calculate
-            <mat-icon >calculate</mat-icon>
+          <button type="button" [disabled]="loadingCalculate" (click)="handleCalculate()" mat-fab extended  color="accent" class=" margin-auto action-button">
+            <ng-container *ngIf="!loadingCalculate; else spinner">
+              <div class="loading-calculate">
+                Calculate
+                <mat-icon>calculate</mat-icon>
+              </div>
+            </ng-container>
+            <ng-template #spinner >
+              <div class="loading-calculate">
+                <mat-progress-spinner
+                [diameter]="20"
+                [strokeWidth]="3"
+                color="primary"
+                mode="indeterminate">
+                </mat-progress-spinner>
+                Calculating...
+              </div>
+            </ng-template>
           </button>
         </div>
 
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>To</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let currency of currencies" [value]="currency">
+            <mat-select formControlName="toCurrency" (valueChange)="onInputCurrencyChange()">
+              <mat-option *ngFor="let currency of aimCurrency" [value]="currency">
                 {{ currency }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="transactionForm.get('toCurrency')?.hasError('required')">
+              This field is required
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field  appearance="outline" class="form-field">
-            <mat-label>Receive</mat-label>
-            <input matInput disabled type="number" />
+            <mat-label>Receive Amount</mat-label>
+            <input formControlName="receiveAmount" matInput [disabled]="true" />
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="">
             <mat-label>Unit Price</mat-label>
-            <input matInput disabled type="number" />
+            <input formControlName="unitPrice" matInput [disabled]="true" />
           </mat-form-field>
         </div>
       </div>
       <div class="actions-results">
-
         <div class="actions">
           <button (click)="handleCancel()" type="button" mat-button color="warn">Cancel</button>
-          <button class="action-button" mat-raised-button color="accent">Confirm</button>
+          <button class="action-button" mat-raised-button color="accent" [disabled]="!transactionForm.valid">Confirm</button>
         </div>
       </div>
     </form>

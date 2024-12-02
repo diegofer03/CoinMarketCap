@@ -1,12 +1,16 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { FetchStatusInvest, FethListTransaction } from '../../models/app.model';
+import { CalculateFetch, FetchStatusInvest, FethListTransaction } from '../../models/app.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MockApiService {
+  private http = inject(HttpClient)
+  private enviro = environment
 
   constructor() { }
 
@@ -34,12 +38,18 @@ export class MockApiService {
     const mockData = {
       status: 'success',
       data: {
-        invested: '7.625,15',
-        actualWorth: '9.500,34'
+        invested: '7,625.15',
+        actualWorth: '9,500.34'
       }
     };
 
     return of(mockData).pipe(delay(1000));
+  }
+
+  calculateTransaction(amount: string, from: string, to: string){
+    console.log(amount)
+    const url = `${this.enviro.apiUrl}?amount=${amount.replaceAll(',','')}&symbol=${from}&convert=${to}&CMC_PRO_API_KEY=${this.enviro.apiKey}`
+    return this.http.get<CalculateFetch>(url)
   }
 
   postData(data: any): Observable<any> {
