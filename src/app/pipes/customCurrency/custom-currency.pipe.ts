@@ -14,9 +14,9 @@ export class CustomCurrencyPipe implements PipeTransform {
     let numericValue = typeof value === 'string' ? parseFloat(value) : value;
 
     return numericValue
-      .toFixed(2)
-      .replace('.', ',')
-      .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      .toFixed(3)
+      .replace(',', '.')
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
 }

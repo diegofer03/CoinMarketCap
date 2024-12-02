@@ -36,6 +36,10 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
+    this.getBreakpoints()
+  }
+
+  getBreakpoints(): void {
     this.appService.getBreakpointCols().subscribe((cols: number) => {
       this.cols = cols;
     });

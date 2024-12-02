@@ -13,7 +13,7 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  width: 100%; /* Ajusta según necesites */
+  width: 100%;
 }
 
 .form-card-content{
@@ -51,9 +51,21 @@
   margin-left: auto;
 }
 
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  background: #4caf50 !important;
+  color: white;
+}
+
+
 .actions-results{
   display: flex;
   flex-direction: column;
+}
+
+.loading-calculate{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .actions {
