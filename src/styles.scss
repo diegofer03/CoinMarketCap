@@ -73,6 +73,8 @@ input[type="number"] {
 
 .mat-mdc-snack-bar-container .mdc-snackbar__surface {
   background: #4caf50 !important;
-  color: white;
+  span {
+    color: white;
+  }
 }
 
